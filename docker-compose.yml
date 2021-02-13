@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  pollingapp-api:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: pollingapp-api
+    container_name: pollingapp
+    ports:
+      - '5005:5005'
+      - '8080:8080'
+    env_file:
+      - .env
+    links:
+      - db
+  db:
+    image: postgres:13-alpine
+    container_name: pollingapp_db
+    environment:
+      POSTGRES_DB: pollapp
+      POSTGRES_USER: $DS_USERNAME
+      POSTGRES_PASSWORD: $DS_PASSWORD
+    ports:
+      - '5432:5432'
+    volumes:
+      - pollapp_vol:/var/lib/postgresql/data
+
+volumes:
+  pollapp_vol:
+

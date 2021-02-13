@@ -1,0 +1,24 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: ${DS_URL}
+    username: ${DS_USERNAME}
+    password: ${DS_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: pollingapppool
+      connection-test-query: select 1;
+      maximum-pool-size: 50
+      minimum-idle: 1
+      connection-timeout: 20000
+      idle-timeout: 10000
+  liquibase:
+    change-log: db/migration/db.changelog-master.yaml
+    enabled: false
