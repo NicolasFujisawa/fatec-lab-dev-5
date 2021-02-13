@@ -9,7 +9,7 @@ services:
     container_name: pollingapp
     ports:
       - '5005:5005'
-      - '8000:80'
+      - '8080:8080'
     env_file:
       - .env
     links:

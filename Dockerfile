@@ -12,6 +12,6 @@ ADD /build/libs/pollingapp*.jar pollingapp-api.jar
 
 SHELL ["/bin/sh", "-c"]
 
-EXPOSE 5005 80
+EXPOSE 5005 8080
 
 CMD java ${ADDITIONAL_OPTS} -jar pollingapp-api.jar --spring.profiles.active=${PROFILE}
