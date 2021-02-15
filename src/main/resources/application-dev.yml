@@ -4,7 +4,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
   datasource:
     url: ${DS_URL}
@@ -20,5 +20,5 @@ spring:
       connection-timeout: 20000
       idle-timeout: 10000
   liquibase:
-    change-log: db/migration/db.changelog-master.yaml
-    enabled: false
+    change-log: classpath:db/migration/db.changelog-master.yaml
+    enabled: true

@@ -30,7 +30,7 @@ public class Option {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "votes")
     private List<User> votes;
 
     @ManyToOne
