@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user-votes
+      author: nicolas.fujisawa
+      changes:
+        - createTable:
+            tableName: user_votes
+            columns:
+              - column:
+                  name: option_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: user_votes
+            baseColumnNames: option_id
+            constraintName: fkey_user_vote_option
+            referencedTableName: options
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: user_votes
+            baseColumnNames: user_id
+            constraintName: fkey_user_vote_user
+            referencedTableName: users
+            referencedColumnNames: id
+        - rollback:
+            dropTable:
+              tableName: user_votes
