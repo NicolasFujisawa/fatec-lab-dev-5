@@ -12,8 +12,6 @@ services:
       - '8080:8080'
     env_file:
       - .env
-    links:
-      - db
   db:
     image: postgres:13-alpine
     container_name: pollingapp_db
@@ -24,8 +22,4 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - pollapp_vol:/var/lib/postgresql/data
-
-volumes:
-  pollapp_vol:
-
+      - ./tmp/postgres:/var/lib/postgresql/data
