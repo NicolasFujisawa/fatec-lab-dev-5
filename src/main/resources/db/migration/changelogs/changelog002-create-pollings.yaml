@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-pollings
+      author: nicolas.fujisawa
+      changes:
+        - createTable:
+            tableName: pollings
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pkey_pollings
+                    nullable: false
+              - column:
+                  name: owner_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(150)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(300)
+        - addForeignKeyConstraint:
+            baseTableName: pollings
+            baseColumnNames: owner_id
+            constraintName: fkey_polling_user
+            referencedTableName: users
+            referencedColumnNames: id
+
+        - rollback:
+            dropForeignKeyConstraint:
+              baseTableName: pollings
+              constraintName: fkey_polling_user
+            dropTable:
+              tableName: pollings
