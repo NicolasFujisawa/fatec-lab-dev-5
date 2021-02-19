@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-options
+      author: nicolas.fujisawa
+      changes:
+        - createTable:
+            tableName: options
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pkey_options
+                    nullable: false
+              - column:
+                  name: poll_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: options
+            baseColumnNames: poll_id
+            constraintName: fkey_option_polling
+            referencedTableName: pollings
+            referencedColumnNames: id
+
+        - rollback:
+            dropTable:
+              tableName: options

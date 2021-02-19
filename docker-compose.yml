@@ -12,6 +12,7 @@ services:
       - '8080:8080'
     env_file:
       - .env
+
   db:
     image: postgres:13-alpine
     container_name: pollingapp_db
