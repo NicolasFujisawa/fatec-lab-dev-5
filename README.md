@@ -16,14 +16,13 @@ docker-compose up dev
 Para fazer o setup em modo desenvolvimento localmente abra uma aba e utilize o comando
 
 ```bash
-./gradlew build --continuous
+make devbuild
 ```
 
 Abra outra aba e utilize o comando
 
 ```bash
-export $(cat .env | xargs) # exportar as variaveis de ambiente
-./gradlew bootRun
+make run
 ```
 
 *Obs*: Lembre-se de alterar o arquivo `.env` para apontar o endereço do banco de dados para `localhost`.
