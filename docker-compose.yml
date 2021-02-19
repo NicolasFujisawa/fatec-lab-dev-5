@@ -24,3 +24,21 @@ services:
       - '5432:5432'
     volumes:
       - ./tmp/postgres:/var/lib/postgresql/data
+  dev:
+    image: gradle:6.7.1-jdk8
+    container_name: pollapp_dev
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
+    volumes:
+      - $PWD:/app
+      - gradle_volume:/home/gradle/.gradle
+    user: gradle
+    working_dir: /app
+    command: sh -c "gradle build --continuous & gradle bootRun"
+    depends_on:
+      - db
+
+volumes:
+  gradle_volume:
