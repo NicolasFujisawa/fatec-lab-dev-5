@@ -27,34 +27,34 @@ class PollServiceSpec extends Specification {
     @Autowired
     private OptionService optionService
 
-    def 'cria um cenario pra poll'() {
-        given: 'um user persistido'
+    def 'simulating a poll flow'() {
+        given: 'an user persisted'
         User user = new User()
         user.setUsername("kik12")
         user.setPassword("mysecret")
         userService.save(user)
 
-        and: 'uma poll persistida'
+        and: 'a poll persisted'
         Poll poll = new Poll()
-        poll.setTitle("norte/sul")
+        poll.setTitle("north/south")
         pollService.save(poll)
         user.addPoll(poll)
 
-        and: '2 options tbm persistidas'
-        Option optionNorte = new Option()
-        optionNorte.setTitle("norte")
-        Option optionSul = new Option()
-        optionSul.setTitle("sul")
-        poll.addOptions([optionSul, optionNorte])
-        optionService.saveAll([optionSul, optionNorte])
+        and: 'two options persisted'
+        Option optionNorth = new Option()
+        optionNorth.setTitle("north")
+        Option optionSouth = new Option()
+        optionSouth.setTitle("south")
+        poll.addOptions([optionSouth, optionNorth])
+        optionService.saveAll([optionSouth, optionNorth])
 
-        and: 'some user votes option norte'
-        user.vote(optionNorte)
+        and: 'some user votes option north'
+        user.vote(optionNorth)
 
-        when: 'recupera as entidades por id'
+        when: 'get all entitys by service'
         def userResult = userService.findById(user.id)
         def pollResult = pollService.findById(poll.id)
-        def optionResult = optionService.findById(optionNorte.id)
+        def optionResult = optionService.findById(optionNorth.id)
 
         then:
         userResult.get().pollings.size() == 1
