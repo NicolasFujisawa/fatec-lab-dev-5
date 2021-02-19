@@ -20,20 +20,21 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.liquibase:liquibase-core'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    implementation group: 'org.codehaus.groovy', name: 'groovy', version: '3.0.7'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'org.postgresql:postgresql'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.liquibase:liquibase-core'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation group: 'org.codehaus.groovy', name: 'groovy', version: '3.0.7'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.spockframework:spock-spring:2.0-M4-groovy-3.0'
+	testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
     testImplementation 'com.h2database:h2:1.4.200'
 }
 
