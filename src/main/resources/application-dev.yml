@@ -22,3 +22,6 @@ spring:
   liquibase:
     change-log: classpath:db/migration/db.changelog-master.yaml
     enabled: true
+  devtools:
+    remote:
+      secret: mysecret
