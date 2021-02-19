@@ -19,3 +19,12 @@ clean:
 
 postgres:
 	docker exec -it pollingapp_db bash
+
+include .env
+export $(shell sed 's/=.*//' .env)
+
+run:
+	./gradlew bootRun
+
+devbuild:
+	./gradlew build -xtest --continuous

@@ -7,11 +7,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.Getter;
@@ -30,9 +32,10 @@ public class Option {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany
-    private List<User> votes;
+    @ManyToMany(mappedBy = "votes")
+    private Set<User> votes = new HashSet<>();
 
     @ManyToOne
+    @JoinColumn(name = "poll_id", nullable = false)
     private Poll poll;
 }
