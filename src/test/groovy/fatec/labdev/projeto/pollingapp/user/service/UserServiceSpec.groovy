@@ -18,7 +18,7 @@ class UserServiceSpec extends Specification {
     @Shared
     def userId = UUID.randomUUID()
 
-    def 'cria um usuario'() {
+    def 'create a user'() {
         given:
         User user = new User()
         user.setUsername("polo")
@@ -33,7 +33,7 @@ class UserServiceSpec extends Specification {
         userPersisted == user
     }
 
-    def 'busca o mesmo usuario'() {
+    def 'get user'() {
         given:
         Optional<User> userOptional
 
@@ -45,7 +45,7 @@ class UserServiceSpec extends Specification {
         userOptional.get().id == userId
     }
 
-    def 'edita o usuario'() {
+    def 'update user'() {
         given:
         User user = userService.findById(userId).get()
         user.setUsername(username)
@@ -64,7 +64,7 @@ class UserServiceSpec extends Specification {
 
     }
 
-    def 'exclui o usuario'() {
+    def 'delete user'() {
         when:
         userService.deleteById(userId)
 
