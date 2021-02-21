@@ -41,3 +41,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.withType(Test) {
+    test {
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+}
