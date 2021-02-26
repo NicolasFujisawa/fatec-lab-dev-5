@@ -33,7 +33,7 @@ public class PollServiceImpl implements PollService {
     }
 
     @Override
-    public List<Option> optionMostVoted(UUID id) {
-        return this.pollRepository.optionMostVoted(id);
+    public List<Option> mostVotedOptions(UUID id) {
+        return this.pollRepository.mostVotedOptions(id);
     }
 }

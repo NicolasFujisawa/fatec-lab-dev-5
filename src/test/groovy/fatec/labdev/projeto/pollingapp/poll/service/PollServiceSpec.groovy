@@ -54,7 +54,7 @@ class PollServiceSpec extends Specification {
         def userResult = userService.findById(user.id)
         def pollResult = pollService.findById(poll.id)
         def optionResult = optionService.findById(optionNorth.id)
-        def mostOptionVoted = pollService.optionMostVoted(poll.id)
+        def mostOptionVoted = pollService.mostVotedOptions(poll.id)
 
         then:
         userResult.get().pollings.size() == 1

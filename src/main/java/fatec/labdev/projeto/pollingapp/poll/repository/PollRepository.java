@@ -20,5 +20,5 @@ public interface PollRepository extends JpaRepository<Poll, UUID> {
             "JOIN pol.options opt \n" +
             "WHERE opt.votes.size = (SELECT max(opt2.votes.size) from pol.options opt2) AND \n" +
             "pol.id = ?1")
-    List<Option> optionMostVoted(UUID pollId);
+    List<Option> mostVotedOptions(UUID pollId);
 }

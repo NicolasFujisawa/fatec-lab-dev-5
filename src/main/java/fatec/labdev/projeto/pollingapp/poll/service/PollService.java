@@ -15,5 +15,5 @@ public interface PollService {
 
     void deleteById(UUID id);
 
-    List<Option> optionMostVoted(UUID id);
+    List<Option> mostVotedOptions(UUID id);
 }
