@@ -47,6 +47,15 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
     private Set<Option> votes = new HashSet<>();
 
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
+
     public void addPoll(Poll poll) {
         this.pollings.add(poll);
         poll.setOwner(this);
@@ -55,5 +64,27 @@ public class User {
     public void vote(Option option) {
         this.votes.add(option);
         option.getVotes().add(this);
+    }
+
+    public static class UserBuilder {
+        private String username;
+        private String password;
+
+        private UserBuilder() {
+        }
+
+        public UserBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public User build() {
+            return new User(username, password);
+        }
     }
 }
