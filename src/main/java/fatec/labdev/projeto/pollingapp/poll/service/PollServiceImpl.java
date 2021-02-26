@@ -1,8 +1,10 @@
 package fatec.labdev.projeto.pollingapp.poll.service;
 
+import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.poll.model.Poll;
 import fatec.labdev.projeto.pollingapp.poll.repository.PollRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -28,5 +30,10 @@ public class PollServiceImpl implements PollService {
     @Override
     public void deleteById(UUID id) {
         this.pollRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Option> optionMostVoted(UUID id) {
+        return this.pollRepository.optionMostVoted(id);
     }
 }

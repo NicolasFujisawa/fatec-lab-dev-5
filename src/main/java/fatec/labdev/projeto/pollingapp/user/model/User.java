@@ -14,9 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -41,7 +39,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Poll> pollings = new ArrayList<>();
+    private Set<Poll> pollings = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_votes",

@@ -1,12 +1,11 @@
 package fatec.labdev.projeto.pollingapp.option.service;
 
+import fatec.labdev.projeto.pollingapp.option.model.Option;
+import fatec.labdev.projeto.pollingapp.option.repository.OptionRepository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import fatec.labdev.projeto.pollingapp.option.model.Option;
-
-import fatec.labdev.projeto.pollingapp.option.repository.OptionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,10 +1,10 @@
 package fatec.labdev.projeto.pollingapp.poll.service
 
+
 import javax.transaction.Transactional
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.annotation.Rollback
 
 import fatec.labdev.projeto.pollingapp.option.model.Option
 import fatec.labdev.projeto.pollingapp.option.service.OptionService
@@ -14,7 +14,6 @@ import fatec.labdev.projeto.pollingapp.user.service.UserService
 import spock.lang.Specification
 
 @SpringBootTest
-@Rollback
 @Transactional
 class PollServiceSpec extends Specification {
 
@@ -37,24 +36,25 @@ class PollServiceSpec extends Specification {
         and: 'a poll persisted'
         Poll poll = new Poll()
         poll.setTitle("north/south")
-        pollService.save(poll)
         user.addPoll(poll)
+        pollService.save(poll)
 
         and: 'two options persisted'
         Option optionNorth = new Option()
         optionNorth.setTitle("north")
         Option optionSouth = new Option()
         optionSouth.setTitle("south")
-        poll.addOptions([optionSouth, optionNorth])
+        poll.addOptions([optionSouth, optionNorth] as Set<Option>)
         optionService.saveAll([optionSouth, optionNorth])
 
         and: 'some user votes option north'
         user.vote(optionNorth)
 
-        when: 'get all entitys by service'
+        when: 'get all entities by service'
         def userResult = userService.findById(user.id)
         def pollResult = pollService.findById(poll.id)
         def optionResult = optionService.findById(optionNorth.id)
+        def mostOptionVoted = pollService.optionMostVoted(poll.id)
 
         then:
         userResult.get().pollings.size() == 1
@@ -63,6 +63,6 @@ class PollServiceSpec extends Specification {
         pollResult.get().owner != null
         optionResult.get().poll != null
         optionResult.get().votes.size() == 1
+        mostOptionVoted.size() == 1
     }
-
 }
