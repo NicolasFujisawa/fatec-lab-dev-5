@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-pollings
+      author: nicolas.fujisawa
+      changes:
+        - addColumn:
+            tableName: pollings
+            columns:
+              name: is_enabled
+              type: boolean
+              defaultValue: true

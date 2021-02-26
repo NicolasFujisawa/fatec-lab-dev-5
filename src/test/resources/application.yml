@@ -1,5 +1,8 @@
 spring:
   jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: none
     show-sql: true
@@ -8,6 +11,14 @@ spring:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;
     username: sa
     password: sa
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      pool-name: pollingapppooltest
+      connection-test-query: select 1;
+      maximum-pool-size: 50
+      minimum-idle: 1
+      connection-timeout: 20000
+      idle-timeout: 10000
   liquibase:
     change-log: classpath:db/migration/db.changelog-master.yaml
     enabled: true
