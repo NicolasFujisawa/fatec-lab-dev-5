@@ -14,19 +14,19 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -41,13 +41,22 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Poll> pollings = new ArrayList<>();
+    private Set<Poll> pollings = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_votes",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "option_id", referencedColumnName = "id"))
     private Set<Option> votes = new HashSet<>();
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    public static UserBuilder builder() {
+        return new UserBuilder();
+    }
 
     public void addPoll(Poll poll) {
         this.pollings.add(poll);
@@ -57,5 +66,27 @@ public class User {
     public void vote(Option option) {
         this.votes.add(option);
         option.getVotes().add(this);
+    }
+
+    public static class UserBuilder {
+        private String username;
+        private String password;
+
+        private UserBuilder() {
+        }
+
+        public UserBuilder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public User build() {
+            return new User(username, password);
+        }
     }
 }

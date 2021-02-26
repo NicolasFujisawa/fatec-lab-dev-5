@@ -1,11 +1,10 @@
 package fatec.labdev.projeto.pollingapp.user.service;
 
+import fatec.labdev.projeto.pollingapp.user.model.User;
+import fatec.labdev.projeto.pollingapp.user.repository.UserRepository;
+
 import java.util.Optional;
 import java.util.UUID;
-
-import fatec.labdev.projeto.pollingapp.user.model.User;
-
-import fatec.labdev.projeto.pollingapp.user.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

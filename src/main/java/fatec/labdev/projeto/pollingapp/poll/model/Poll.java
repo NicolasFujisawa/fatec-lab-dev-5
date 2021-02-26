@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.Getter;
@@ -36,8 +36,11 @@ public class Poll {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_enabled")
+    private boolean isEnabled;
+
     @OneToMany(mappedBy = "poll", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Option> options = new ArrayList<>();
+    private Set<Option> options = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
@@ -48,7 +51,7 @@ public class Poll {
         option.setPoll(this);
     }
 
-    public void addOptions(List<Option> options) {
+    public void addOptions(Set<Option> options) {
         for (Option option : options) {
             this.addOption(option);
         }
