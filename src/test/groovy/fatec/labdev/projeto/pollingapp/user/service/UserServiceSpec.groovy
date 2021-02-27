@@ -32,6 +32,7 @@ class UserServiceSpec extends Specification {
 
         then:
         user.id != null
+        user.role == UserRole.MEMBER
         userPersisted == user
     }
 

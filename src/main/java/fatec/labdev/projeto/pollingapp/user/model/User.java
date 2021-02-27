@@ -59,6 +59,12 @@ public class User {
         this.password = password;
     }
 
+    public User(String username, String password, UserRole role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
     public static UserBuilder builder() {
         return new UserBuilder();
     }
@@ -76,6 +82,7 @@ public class User {
     public static class UserBuilder {
         private String username;
         private String password;
+        private UserRole role;
 
         private UserBuilder() {
         }
@@ -90,8 +97,13 @@ public class User {
             return this;
         }
 
+        public UserBuilder role(UserRole role) {
+            this.role = role;
+            return this;
+        }
+
         public User build() {
-            return new User(username, password);
+            return new User(username, password, role);
         }
     }
 }

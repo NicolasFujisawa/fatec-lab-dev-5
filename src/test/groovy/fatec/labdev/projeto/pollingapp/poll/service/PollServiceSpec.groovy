@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import fatec.labdev.projeto.pollingapp.option.model.Option
 import fatec.labdev.projeto.pollingapp.option.service.OptionService
 import fatec.labdev.projeto.pollingapp.poll.model.Poll
+import fatec.labdev.projeto.pollingapp.user.enums.UserRole
 import fatec.labdev.projeto.pollingapp.user.model.User
 import fatec.labdev.projeto.pollingapp.user.service.UserService
 import spock.lang.Specification
@@ -28,7 +29,12 @@ class PollServiceSpec extends Specification {
 
     def 'poll with two options and one vote'() {
         given: 'an user persisted'
-        User user = User.builder().username("kik12").password("mysecret").build()
+        User user = User
+                .builder()
+                .username("kik12")
+                .password("mysecret")
+                .role(UserRole.ADMIN)
+                .build()
         userService.save(user)
 
         and: 'a poll persisted'
@@ -66,8 +72,20 @@ class PollServiceSpec extends Specification {
 
     def 'poll with three options and two votes'() {
         given: 'two users persisted'
-        User user1 = User.builder().username("kek13").password("123").build()
-        User user2 = User.builder().username("rog11").password("132").build()
+        User user1 = User
+                .builder()
+                .username("kek13")
+                .password("123")
+                .role(UserRole.ADMIN)
+                .build()
+
+        User user2 = User
+                .builder()
+                .username("rog11")
+                .password("132")
+                .role(UserRole.ADMIN)
+                .build()
+
         userService.save(user1)
         userService.save(user2)
 
