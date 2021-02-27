@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-users-add-role
+      author: jason.carneiro
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              name: role
+              type: varchar(50)
+              constraints:
+                nullable: false
