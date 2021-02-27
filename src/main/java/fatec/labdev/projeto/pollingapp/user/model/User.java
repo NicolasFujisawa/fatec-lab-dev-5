@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import fatec.labdev.projeto.pollingapp.user.enums.UserRole;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +41,9 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "role")
+    private UserRole role;
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Poll> pollings = new HashSet<>();

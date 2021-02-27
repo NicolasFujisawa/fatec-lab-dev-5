@@ -3,6 +3,7 @@ package fatec.labdev.projeto.pollingapp.user.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
+import fatec.labdev.projeto.pollingapp.user.enums.UserRole
 import fatec.labdev.projeto.pollingapp.user.model.User
 import spock.lang.Shared
 import spock.lang.Specification
@@ -23,6 +24,7 @@ class UserServiceSpec extends Specification {
         User user = new User()
         user.setUsername("polo")
         user.setPassword("mysecret")
+        user.setRole(UserRole.MEMBER)
 
         when:
         def userPersisted = userService.save(user)
