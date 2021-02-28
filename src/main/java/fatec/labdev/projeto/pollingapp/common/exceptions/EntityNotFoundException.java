@@ -1,4 +1,4 @@
-package fatec.labdev.common.exceptions;
+package fatec.labdev.projeto.pollingapp.common.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

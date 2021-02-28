@@ -2,7 +2,7 @@ package fatec.labdev.projeto.pollingapp.user.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import fatec.labdev.common.exceptions.EntityNotFoundException;
+import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
 
 import fatec.labdev.projeto.pollingapp.user.enums.UserRole
 import fatec.labdev.projeto.pollingapp.user.model.User

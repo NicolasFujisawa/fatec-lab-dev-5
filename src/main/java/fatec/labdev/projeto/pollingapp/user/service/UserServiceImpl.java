@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import fatec.labdev.common.exceptions.EntityNotFoundException;
+import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 import fatec.labdev.projeto.pollingapp.user.repository.UserRepository;
 
