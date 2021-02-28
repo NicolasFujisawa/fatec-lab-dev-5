@@ -21,4 +21,7 @@ public interface PollRepository extends JpaRepository<Poll, UUID> {
             "WHERE opt.votes.size = (SELECT max(opt2.votes.size) from pol.options opt2) AND \n" +
             "pol.id = ?1")
     List<Option> mostVotedOptions(UUID pollId);
+
+    @Query(value = "SELECT pol from Poll pol WHERE pol.owner.id = ?1 AND pol.isEnabled = ?2")
+    List<Poll> findByOwnerAndIsEnabled(UUID ownerId, Boolean isEnabled);
 }

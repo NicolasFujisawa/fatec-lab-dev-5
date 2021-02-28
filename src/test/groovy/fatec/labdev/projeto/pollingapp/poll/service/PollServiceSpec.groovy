@@ -124,4 +124,36 @@ class PollServiceSpec extends Specification {
         optionResult.get().votes.size() == 1
         mostVotedOptions.size() == 2
     }
+
+    def 'find enabled polls by owner'() {
+        given: 'a valid user'
+        User user = User
+                .builder()
+                .username("kek13")
+                .password("123")
+                .role(UserRole.ADMIN)
+                .build()
+        userService.save(user)
+
+        and: 'an enabled poll'
+        Poll enabledPoll = new Poll()
+        enabledPoll.setTitle("quem atropelou o goku?")
+        enabledPoll.setEnabled(true)
+        user.addPoll(enabledPoll)
+        pollService.save(enabledPoll)
+
+        and: 'a disabled poll'
+        Poll disabledPoll = new Poll()
+        disabledPoll.setTitle("o batman é o superman?")
+        disabledPoll.setEnabled(false)
+        user.addPoll(disabledPoll)
+        pollService.save(disabledPoll)
+
+        when: 'get just enabled polls'
+        def enabledPolls = pollService.findEnabledByOwner(user.id)
+
+        then: 'should return just one poll'
+        enabledPolls.size() == 1
+        enabledPolls.get(0).title == enabledPoll.title
+    }
 }
