@@ -61,8 +61,8 @@ class PollServiceSpec extends Specification {
         def mostVotedOptions = pollService.mostVotedOptions(poll.id)
 
         then:
-        userResult.get().pollings.size() == 1
-        userResult.get().votes.size() == 1
+        userResult.pollings.size() == 1
+        userResult.votes.size() == 1
         pollResult.get().options.size() == 2
         pollResult.get().owner != null
         optionResult.get().poll != null
@@ -116,8 +116,8 @@ class PollServiceSpec extends Specification {
         def mostVotedOptions = pollService.mostVotedOptions(poll.id)
 
         then:
-        userResult.get().pollings.size() == 1
-        userResult.get().votes.size() == 1
+        userResult.pollings.size() == 1
+        userResult.votes.size() == 1
         pollResult.get().options.size() == 3
         pollResult.get().owner != null
         optionResult.get().poll != null

@@ -2,6 +2,7 @@ package fatec.labdev.projeto.pollingapp.user.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
+import fatec.labdev.common.exceptions.EntityNotFoundException;
 
 import fatec.labdev.projeto.pollingapp.user.enums.UserRole
 import fatec.labdev.projeto.pollingapp.user.model.User
@@ -38,26 +39,25 @@ class UserServiceSpec extends Specification {
 
     def 'get user'() {
         given:
-        Optional<User> userOptional
+        User user
 
         when:
-        userOptional = userService.findById(userId)
+        user = userService.findById(userId)
 
         then:
-        userOptional.isPresent()
-        userOptional.get().id == userId
+        user.id == userId
     }
 
     def 'update user'() {
         given:
-        User user = userService.findById(userId).get()
+        User user = userService.findById(userId)
         user.setUsername(username)
 
         when:
         userService.save(user)
 
         then:
-        userService.findById(userId).get().username == expectedUsername
+        userService.findById(userId).username == expectedUsername
 
         where:
         username || expectedUsername
@@ -70,9 +70,10 @@ class UserServiceSpec extends Specification {
     def 'delete user'() {
         when:
         userService.deleteById(userId)
+        userService.findById(userId)
 
         then:
-        userService.findById(userId) == Optional.empty()
+        thrown EntityNotFoundException
     }
 
 }
