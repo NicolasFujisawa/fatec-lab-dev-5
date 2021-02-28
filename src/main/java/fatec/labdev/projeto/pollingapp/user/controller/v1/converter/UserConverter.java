@@ -7,18 +7,17 @@ import fatec.labdev.projeto.pollingapp.user.model.User;
 public class UserConverter {
     public static UserResponse convertFrom(User user) {
         return UserResponse.builder()
-            .id(user.getId())
-            .username(user.getUsername())
-            .role(user.getRole())
-            .build();
+                           .id(user.getId())
+                           .username(user.getUsername())
+                           .role(user.getRole())
+                           .build();
     }
 
     public static User convertFrom(CreateUserRequest userRequest) {
-        User user = new User();
-        user.setUsername(userRequest.getUsername());
-        user.setPassword(userRequest.getPassword());
-        user.setRole(userRequest.getRole());
-
-        return user;
+        return User.builder()
+                   .username(userRequest.getUsername())
+                   .password(userRequest.getPassword())
+                   .role(userRequest.getRole())
+                   .build();
     }
 }
