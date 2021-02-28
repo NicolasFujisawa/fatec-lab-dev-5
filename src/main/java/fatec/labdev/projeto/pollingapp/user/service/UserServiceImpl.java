@@ -1,13 +1,13 @@
 package fatec.labdev.projeto.pollingapp.user.service;
 
-import fatec.labdev.projeto.pollingapp.user.model.User;
-import fatec.labdev.projeto.pollingapp.user.repository.UserRepository;
-
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import fatec.labdev.common.exceptions.EntityNotFoundException;
+import fatec.labdev.projeto.pollingapp.user.model.User;
+import fatec.labdev.projeto.pollingapp.user.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -21,8 +21,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findById(UUID id) {
-        return this.userRepository.findById(id);
+    public User findById(UUID id) {
+        return this.userRepository.findById(id)
+                                  .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
