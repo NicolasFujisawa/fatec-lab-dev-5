@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
-import fatec.labdev.projeto.pollingapp.user.controller.v1.request.CreateUserRequest;
+import fatec.labdev.projeto.pollingapp.user.controller.v1.request.UserRequest;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 import fatec.labdev.projeto.pollingapp.user.service.UserService;
@@ -28,15 +28,15 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable("id") UUID id) {
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(UserConverter.convertFrom(this.userService.findById(id)));
     }
 
     @PostMapping("/new")
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest userRequest) {
+    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
         return ResponseEntity
-                .status(HttpStatus.CREATED)
+                .status(HttpStatus.OK)
                 .body(UserConverter.convertFrom(this.userService.save(user)));
     }
 

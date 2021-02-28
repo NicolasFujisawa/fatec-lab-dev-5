@@ -1,6 +1,6 @@
 package fatec.labdev.projeto.pollingapp.user.controller.v1.converter;
 
-import fatec.labdev.projeto.pollingapp.user.controller.v1.request.CreateUserRequest;
+import fatec.labdev.projeto.pollingapp.user.controller.v1.request.UserRequest;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 
@@ -13,7 +13,7 @@ public class UserConverter {
                            .build();
     }
 
-    public static User convertFrom(CreateUserRequest userRequest) {
+    public static User convertFrom(UserRequest userRequest) {
         return User.builder()
                    .username(userRequest.getUsername())
                    .password(userRequest.getPassword())
