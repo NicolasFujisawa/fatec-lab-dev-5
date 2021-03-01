@@ -1,15 +1,15 @@
 package fatec.labdev.projeto.pollingapp.poll.service;
 
-import fatec.labdev.projeto.pollingapp.option.model.Option;
-import fatec.labdev.projeto.pollingapp.poll.model.Poll;
-import fatec.labdev.projeto.pollingapp.poll.repository.PollRepository;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
+import fatec.labdev.projeto.pollingapp.option.model.Option;
+import fatec.labdev.projeto.pollingapp.poll.model.Poll;
+import fatec.labdev.projeto.pollingapp.poll.repository.PollRepository;
 
 @Service
 public class PollServiceImpl implements PollService {
@@ -23,8 +23,9 @@ public class PollServiceImpl implements PollService {
     }
 
     @Override
-    public Optional<Poll> findById(UUID id) {
-        return this.pollRepository.findById(id);
+    public Poll findById(UUID id) {
+        return this.pollRepository.findById(id)
+                                  .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

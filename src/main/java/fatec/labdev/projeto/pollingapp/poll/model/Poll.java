@@ -18,12 +18,14 @@ import java.util.Set;
 import java.util.UUID;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "pollings")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Poll {
 
     @Id
@@ -54,6 +56,51 @@ public class Poll {
     public void addOptions(Set<Option> options) {
         for (Option option : options) {
             this.addOption(option);
+        }
+    }
+
+    public static PollBuilder builder() {
+        return new PollBuilder();
+    }
+
+    public Poll(String title, String description, boolean isEnabled, User user) {
+        this.title = title;
+        this.description = description;
+        this.isEnabled = isEnabled;
+        this.owner = user;
+    }
+
+    public static class PollBuilder {
+        private String title;
+        private String description;
+        private boolean isEnabled;
+        private User owner;
+
+        private PollBuilder() {
+        }
+
+        public PollBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public PollBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public PollBuilder isEnabled(boolean isEnabled) {
+            this.isEnabled = isEnabled;
+            return this;
+        }
+
+        public PollBuilder owner(User owner) {
+            this.owner = owner;
+            return this;
+        }
+
+        public Poll build() {
+            return new Poll(title, description, isEnabled, owner);
         }
     }
 }
