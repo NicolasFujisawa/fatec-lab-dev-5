@@ -66,8 +66,8 @@ class PollServiceSpec extends Specification {
         userResult.votes.size() == 1
         pollResult.options.size() == 2
         pollResult.owner != null
-        optionResult.get().poll != null
-        optionResult.get().votes.size() == 1
+        optionResult.poll != null
+        optionResult.votes.size() == 1
         mostVotedOptions.size() == 1
     }
 
@@ -121,8 +121,8 @@ class PollServiceSpec extends Specification {
         userResult.votes.size() == 1
         pollResult.options.size() == 3
         pollResult.owner != null
-        optionResult.get().poll != null
-        optionResult.get().votes.size() == 1
+        optionResult.poll != null
+        optionResult.votes.size() == 1
         mostVotedOptions.size() == 2
     }
 

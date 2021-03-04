@@ -1,10 +1,10 @@
 package fatec.labdev.projeto.pollingapp.option.service;
 
+import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.option.repository.OptionRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,9 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public Optional<Option> findById(UUID id) {
-        return this.optionRepository.findById(id);
+    public Option findById(UUID id) {
+        return this.optionRepository.findById(id)
+                                    .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

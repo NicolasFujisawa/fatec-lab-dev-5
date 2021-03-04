@@ -3,7 +3,6 @@ package fatec.labdev.projeto.pollingapp.option.service;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface OptionService {
@@ -12,7 +11,7 @@ public interface OptionService {
 
     Option save(Option option);
 
-    Optional<Option> findById(UUID id);
+    Option findById(UUID id);
 
     void deleteById(UUID id);
 }

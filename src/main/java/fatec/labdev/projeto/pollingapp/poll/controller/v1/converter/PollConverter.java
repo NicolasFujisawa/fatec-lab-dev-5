@@ -3,7 +3,7 @@ package fatec.labdev.projeto.pollingapp.poll.controller.v1.converter;
 import fatec.labdev.projeto.pollingapp.poll.controller.v1.request.PollRequest;
 import fatec.labdev.projeto.pollingapp.poll.controller.v1.response.PollResponse;
 import fatec.labdev.projeto.pollingapp.poll.model.Poll;
-import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
+import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.SimpleUserConverter;
 
 public class PollConverter {
     public static PollResponse convertFrom(Poll poll) {
@@ -12,9 +12,7 @@ public class PollConverter {
                            .title(poll.getTitle())
                            .description(poll.getDescription())
                            .isEnabled(poll.isEnabled())
-                           .owner(
-                               UserConverter.convertFrom(poll.getOwner())
-                           )
+                           .owner(SimpleUserConverter.convertFrom(poll.getOwner()))
                            .build();
     }
 
