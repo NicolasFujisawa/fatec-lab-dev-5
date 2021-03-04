@@ -1,9 +1,15 @@
 package fatec.labdev.projeto.pollingapp.poll.controller.v1.request;
 
 import fatec.labdev.projeto.pollingapp.user.model.User;
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PollRequest {
     private String title;
 

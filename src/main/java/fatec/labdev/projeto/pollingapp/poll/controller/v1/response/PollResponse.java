@@ -1,13 +1,18 @@
 package fatec.labdev.projeto.pollingapp.poll.controller.v1.response;
 
 import java.util.UUID;
-
-import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
+import fatec.labdev.projeto.pollingapp.user.controller.v1.response.SimpleUserResponse;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PollResponse {
     private UUID id;
 
@@ -17,5 +22,5 @@ public class PollResponse {
 
     private boolean isEnabled;
 
-    private UserResponse owner;
+    private SimpleUserResponse owner;
 }
