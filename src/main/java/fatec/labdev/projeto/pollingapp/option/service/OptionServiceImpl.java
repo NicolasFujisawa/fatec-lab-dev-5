@@ -1,7 +1,9 @@
 package fatec.labdev.projeto.pollingapp.option.service;
 
+import fatec.labdev.projeto.pollingapp.log.service.LogService;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.option.repository.OptionRepository;
+import fatec.labdev.projeto.pollingapp.user.model.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,9 +11,12 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class OptionServiceImpl implements OptionService {
+    @Autowired
+    private LogService logService;
 
     @Autowired
     private OptionRepository optionRepository;
@@ -34,5 +39,26 @@ public class OptionServiceImpl implements OptionService {
     @Override
     public void deleteById(UUID id) {
         this.optionRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void vote(Option option, User user) {
+        user.vote(option);
+        logService.createLog(
+                Option.class.getName(),
+                String.format("User=%s vote for option=%s",
+                        user.getId(),
+                        option.getId()));
+    }
+
+    @Override
+    public void removeVote(Option option, User user) {
+        user.removeVote(option);
+        logService.createLog(
+                Option.class.getName(),
+                String.format("User=%s remove vote for option=%s",
+                        user.getId(),
+                        option.getId()));
     }
 }

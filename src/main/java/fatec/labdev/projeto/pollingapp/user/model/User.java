@@ -79,6 +79,11 @@ public class User {
         option.getVotes().add(this);
     }
 
+    public void removeVote(Option option) {
+        votes.remove(option);
+        option.getVotes().remove(this);
+    }
+
     public static class UserBuilder {
         private String username;
         private String password;
