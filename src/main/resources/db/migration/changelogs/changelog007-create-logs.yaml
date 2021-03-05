@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-logs
+      author: jason.carneiro
+      changes:
+        - createTable:
+            tableName: logs
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: entity
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: message
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+        - rollback:
+            dropTable:
+              tableName: logs
