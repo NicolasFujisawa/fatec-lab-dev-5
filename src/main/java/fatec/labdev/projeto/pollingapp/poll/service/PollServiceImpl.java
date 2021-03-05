@@ -37,4 +37,14 @@ public class PollServiceImpl implements PollService {
     public List<Option> mostVotedOptions(UUID id) {
         return this.pollRepository.mostVotedOptions(id);
     }
+
+    @Override
+    public List<Poll> findByOwnerAndIsEnabled(UUID ownerId, Boolean isEnabled) {
+        return pollRepository.findByOwnerAndIsEnabled(ownerId, isEnabled);
+    }
+
+    @Override
+    public List<Poll> findEnabledByOwner(UUID ownerId) {
+        return findByOwnerAndIsEnabled(ownerId, true);
+    }
 }

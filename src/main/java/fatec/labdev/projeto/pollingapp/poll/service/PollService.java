@@ -15,4 +15,8 @@ public interface PollService {
     void deleteById(UUID id);
 
     List<Option> mostVotedOptions(UUID id);
+
+    List<Poll> findByOwnerAndIsEnabled(UUID ownerId, Boolean isEnabled);
+
+    List<Poll> findEnabledByOwner(UUID ownerId);
 }
