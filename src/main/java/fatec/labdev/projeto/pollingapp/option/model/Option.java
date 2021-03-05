@@ -17,12 +17,14 @@ import java.util.Set;
 import java.util.UUID;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "options")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Option {
 
     @Id
@@ -38,4 +40,35 @@ public class Option {
     @ManyToOne
     @JoinColumn(name = "poll_id", nullable = false)
     private Poll poll;
+
+    public Option(String title, Poll poll) {
+        this.setTitle(title);
+        this.setPoll(poll);
+    }
+
+    public static OptionBuilder builder() {
+        return new OptionBuilder();
+    }
+
+    public static class OptionBuilder {
+        private String title;
+        private Poll poll;
+
+        private OptionBuilder() {
+        }
+
+        public OptionBuilder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public OptionBuilder poll(Poll poll) {
+            this.poll = poll;
+            return this;
+        }
+
+        public Option build() {
+            return new Option(title, poll);
+        }
+    }
 }

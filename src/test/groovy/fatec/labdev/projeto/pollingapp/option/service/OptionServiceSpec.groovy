@@ -59,7 +59,7 @@ class OptionServiceSpec extends Specification {
         def logs = logService.findByEntity(Option.class.getName())
 
         then:
-        result.get() != null
+        result != null
         logs.size() == 1
     }
 
@@ -96,7 +96,7 @@ class OptionServiceSpec extends Specification {
         def logs = logService.findByEntity(Option.class.getName())
 
         then:
-        result.get() != null
+        result != null
         logs.size() == 2
     }
 }

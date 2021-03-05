@@ -12,6 +12,7 @@ import fatec.labdev.projeto.pollingapp.poll.model.Poll
 import fatec.labdev.projeto.pollingapp.user.enums.UserRole
 import fatec.labdev.projeto.pollingapp.user.model.User
 import fatec.labdev.projeto.pollingapp.user.service.UserService
+import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
 import spock.lang.Specification
 
 @SpringBootTest
@@ -61,12 +62,12 @@ class PollServiceSpec extends Specification {
         def mostVotedOptions = pollService.mostVotedOptions(poll.id)
 
         then:
-        userResult.get().pollings.size() == 1
-        userResult.get().votes.size() == 1
-        pollResult.get().options.size() == 2
-        pollResult.get().owner != null
-        optionResult.get().poll != null
-        optionResult.get().votes.size() == 1
+        userResult.pollings.size() == 1
+        userResult.votes.size() == 1
+        pollResult.options.size() == 2
+        pollResult.owner != null
+        optionResult.poll != null
+        optionResult.votes.size() == 1
         mostVotedOptions.size() == 1
     }
 
@@ -116,13 +117,24 @@ class PollServiceSpec extends Specification {
         def mostVotedOptions = pollService.mostVotedOptions(poll.id)
 
         then:
-        userResult.get().pollings.size() == 1
-        userResult.get().votes.size() == 1
-        pollResult.get().options.size() == 3
-        pollResult.get().owner != null
-        optionResult.get().poll != null
-        optionResult.get().votes.size() == 1
+        userResult.pollings.size() == 1
+        userResult.votes.size() == 1
+        pollResult.options.size() == 3
+        pollResult.owner != null
+        optionResult.poll != null
+        optionResult.votes.size() == 1
         mostVotedOptions.size() == 2
+    }
+
+    def 'get non-existant poll'() {
+        given: 'a fake uuid'
+        def UUID fakeUUID = UUID.randomUUID()
+
+        when: 'get poll'
+        pollService.findById(fakeUUID)
+
+        then:
+        thrown EntityNotFoundException
     }
 
     def 'find enabled polls by owner'() {
