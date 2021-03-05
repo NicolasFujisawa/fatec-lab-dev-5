@@ -53,6 +53,7 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
+    @Transactional
     public void removeVote(Option option, User user) {
         user.removeVote(option);
         logService.createLog(

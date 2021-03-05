@@ -12,10 +12,12 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "logs")
 @Builder
 public class Log {
