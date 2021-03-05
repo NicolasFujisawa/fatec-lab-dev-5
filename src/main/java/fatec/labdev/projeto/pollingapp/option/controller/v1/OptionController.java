@@ -20,7 +20,7 @@ import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.option.service.OptionService;
 
 @RestController
-@RequestMapping("/option")
+@RequestMapping("v1/options")
 public class OptionController {
 
     @Autowired
@@ -33,11 +33,11 @@ public class OptionController {
                 .body(OptionConverter.convertFrom(this.optionService.findById(id)));
     }
 
-    @PostMapping("/new")
+    @PostMapping("/create")
     public ResponseEntity<OptionResponse> createPoll(@RequestBody OptionRequest optionRequest) {
         Option option = OptionConverter.convertFrom(optionRequest);
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .body(OptionConverter.convertFrom(this.optionService.save(option)));
     }
 
@@ -45,7 +45,7 @@ public class OptionController {
     public ResponseEntity<List<OptionResponse>> createPoll(@RequestBody OptionRequest[] optionRequests) {
         List<Option> options = OptionConverter.convertManyFrom(optionRequests);
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .body(OptionConverter.convertManyFrom(this.optionService.saveAll(options)));
     }
 

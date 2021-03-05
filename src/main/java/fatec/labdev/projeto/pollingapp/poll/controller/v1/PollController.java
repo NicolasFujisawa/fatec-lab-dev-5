@@ -22,7 +22,7 @@ import fatec.labdev.projeto.pollingapp.poll.model.Poll;
 import fatec.labdev.projeto.pollingapp.poll.service.PollService;
 
 @RestController
-@RequestMapping("/poll")
+@RequestMapping("v1/polls")
 public class PollController {
 
     @Autowired
@@ -42,7 +42,7 @@ public class PollController {
                 .body(OptionConverter.convertManyFrom(this.pollService.mostVotedOptions(id)));
     }
 
-    @PostMapping("/new")
+    @PostMapping("/create")
     public ResponseEntity<PollResponse> createPoll(@RequestBody PollRequest pollRequest) {
         Poll poll = PollConverter.convertFrom(pollRequest);
         return ResponseEntity

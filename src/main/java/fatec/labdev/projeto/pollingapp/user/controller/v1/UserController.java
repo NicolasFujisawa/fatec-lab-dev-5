@@ -19,7 +19,7 @@ import fatec.labdev.projeto.pollingapp.user.model.User;
 import fatec.labdev.projeto.pollingapp.user.service.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("v1/users")
 public class UserController {
 
     @Autowired
@@ -28,15 +28,15 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUser(@PathVariable("id") UUID id) {
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .body(UserConverter.convertFrom(this.userService.findById(id)));
     }
 
-    @PostMapping("/new")
+    @PostMapping("/create")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .status(HttpStatus.CREATED)
                 .body(UserConverter.convertFrom(this.userService.save(user)));
     }
 
