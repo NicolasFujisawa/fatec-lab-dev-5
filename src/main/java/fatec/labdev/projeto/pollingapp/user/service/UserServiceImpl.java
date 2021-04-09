@@ -1,5 +1,7 @@
 package fatec.labdev.projeto.pollingapp.user.service;
 
+import javax.persistence.EntityExistsException;
+
 import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
 import fatec.labdev.projeto.pollingapp.config.jwt.JwtUtil;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
@@ -43,6 +45,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
+        if (this.userRepository.existsByUsername(user.getUsername())) {
+            throw new EntityExistsException("Username already exists");
+        }
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public User update(User user) {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);
     }
