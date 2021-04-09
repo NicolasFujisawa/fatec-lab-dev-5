@@ -12,6 +12,8 @@ services:
       - '8080:8080'
     env_file:
       - .env
+    depends_on:
+      - db
 
   db:
     image: postgres:13-alpine
@@ -24,6 +26,7 @@ services:
       - '5432:5432'
     volumes:
       - ./tmp/postgres:/var/lib/postgresql/data
+
   dev:
     image: gradle:6.7.1-jdk8
     container_name: pollapp_dev
