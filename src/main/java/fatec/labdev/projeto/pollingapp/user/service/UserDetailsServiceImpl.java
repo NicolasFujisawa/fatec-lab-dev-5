@@ -21,10 +21,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        if (!this.userService.existsByUsername(username)) {
+        User user = this.userService.findByUsername(username);
+        if (user == null) {
             throw new UsernameNotFoundException("Username " + username + " not found!");
         }
-        User user = this.userService.findByUsername(username);
         return new UserDetailsImpl(user);
     }
 }
