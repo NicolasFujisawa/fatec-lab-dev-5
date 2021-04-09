@@ -1,5 +1,11 @@
 package fatec.labdev.projeto.pollingapp.user.controller.v1;
 
+import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
+import fatec.labdev.projeto.pollingapp.user.controller.v1.request.UserRequest;
+import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
+import fatec.labdev.projeto.pollingapp.user.model.User;
+import fatec.labdev.projeto.pollingapp.user.service.UserService;
+
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
-import fatec.labdev.projeto.pollingapp.user.controller.v1.request.UserRequest;
-import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
-import fatec.labdev.projeto.pollingapp.user.model.User;
-import fatec.labdev.projeto.pollingapp.user.service.UserService;
 
 @RestController
 @RequestMapping("v1/users")
@@ -38,6 +38,14 @@ public class UserController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(UserConverter.convertFrom(this.userService.save(user)));
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<UserResponse> signIn(@RequestBody UserRequest loginRequest) {
+        User user = UserConverter.convertFrom(loginRequest);
+        return ResponseEntity
+                .status(HttpStatus.FOUND)
+                .body(this.userService.signInUser(user));
     }
 
     @PostMapping("/{id}/delete")

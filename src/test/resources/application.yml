@@ -22,3 +22,5 @@ spring:
   liquibase:
     change-log: classpath:db/migration/db.changelog-master.yaml
     enabled: true
+jwt:
+  secret: 0b32b815b77f891ce8f85a8ceb838943d8c73325906c1ed034205017ef24f981abe639a39c1d55efac4f0ba5583deff25995af0be714f83504c5ae1127ae1ffe
