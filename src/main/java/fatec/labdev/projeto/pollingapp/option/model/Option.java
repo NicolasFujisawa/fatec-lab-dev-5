@@ -1,5 +1,9 @@
 package fatec.labdev.projeto.pollingapp.option.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import fatec.labdev.projeto.pollingapp.option.controller.v1.OptionView;
+import fatec.labdev.projeto.pollingapp.poll.controller.v1.PollView;
 import fatec.labdev.projeto.pollingapp.poll.model.Poll;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 
@@ -27,16 +31,20 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Option {
 
+    @JsonView({OptionView.FullOption.class, OptionView.CreationOption.class, PollView.FullPoll.class})
     @Id
     @GeneratedValue
     private UUID id;
 
+    @JsonView({OptionView.ShortOption.class, PollView.FullPoll.class})
     @Column(name = "title")
     private String title;
 
+    @JsonView({OptionView.FullOption.class})
     @ManyToMany(mappedBy = "votes")
     private Set<User> votes = new HashSet<>();
 
+    @JsonView({OptionView.FullOption.class})
     @ManyToOne
     @JoinColumn(name = "poll_id", nullable = false)
     private Poll poll;

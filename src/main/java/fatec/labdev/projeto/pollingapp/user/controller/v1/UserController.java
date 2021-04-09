@@ -1,22 +1,20 @@
 package fatec.labdev.projeto.pollingapp.user.controller.v1;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.request.UserRequest;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
+import fatec.labdev.projeto.pollingapp.user.enums.UserRole;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 import fatec.labdev.projeto.pollingapp.user.service.UserService;
-
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping("v1/users")
@@ -26,18 +24,21 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUser(@PathVariable("id") UUID id) {
+    @JsonView(UserView.FullUser.class)
+    public ResponseEntity<User> getUser(@PathVariable("id") UUID id) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(UserConverter.convertFrom(this.userService.findById(id)));
+                .body(this.userService.findById(id));
     }
 
     @PostMapping("/create")
-    public ResponseEntity<UserResponse> createUser(@RequestBody UserRequest userRequest) {
+    @JsonView(UserView.CreationUser.class)
+    public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
+        user.setRole(UserRole.MEMBER);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(UserConverter.convertFrom(this.userService.save(user)));
+                .body(this.userService.save(user));
     }
 
     @PostMapping("/sign-in")
@@ -48,10 +49,9 @@ public class UserController {
                 .body(this.userService.signInUser(user));
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") UUID id) {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-
 }

@@ -1,6 +1,10 @@
 package fatec.labdev.projeto.pollingapp.poll.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import fatec.labdev.projeto.pollingapp.option.controller.v1.OptionView;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
+import fatec.labdev.projeto.pollingapp.poll.controller.v1.PollView;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 
 import javax.persistence.CascadeType;
@@ -28,22 +32,28 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Poll {
 
+    @JsonView({PollView.FullPoll.class, PollView.CreationPoll.class, OptionView.FullOption.class})
     @Id
     @GeneratedValue
     private UUID id;
 
+    @JsonView({PollView.ShortPoll.class, OptionView.FullOption.class})
     @Column(name = "title")
     private String title;
 
+    @JsonView({PollView.ShortPoll.class})
     @Column(name = "description")
     private String description;
 
+    @JsonView({PollView.FullPoll.class})
     @Column(name = "is_enabled")
     private boolean isEnabled;
 
+    @JsonView({PollView.FullPoll.class})
     @OneToMany(mappedBy = "poll", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Option> options = new HashSet<>();
 
+    @JsonView({PollView.FullPoll.class})
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
