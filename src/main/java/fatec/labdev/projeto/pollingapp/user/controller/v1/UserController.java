@@ -54,4 +54,17 @@ public class UserController {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+    @JsonView(UserView.FullUser.class)
+    @PutMapping("/{id}/update")
+    public ResponseEntity<User> update(
+            @RequestBody UserRequest userRequest,
+            @PathVariable("id") UUID id) {
+        User user = UserConverter.convertFrom(userRequest);
+        user.setId(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.userService.update(user));
+    }
 }
