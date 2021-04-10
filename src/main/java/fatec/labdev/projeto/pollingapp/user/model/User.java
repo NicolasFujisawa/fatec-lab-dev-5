@@ -1,28 +1,23 @@
 package fatec.labdev.projeto.pollingapp.user.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import fatec.labdev.projeto.pollingapp.option.controller.v1.OptionView;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
+import fatec.labdev.projeto.pollingapp.poll.controller.v1.PollView;
 import fatec.labdev.projeto.pollingapp.poll.model.Poll;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
-
+import fatec.labdev.projeto.pollingapp.user.controller.v1.UserView;
 import fatec.labdev.projeto.pollingapp.user.enums.UserRole;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -31,23 +26,27 @@ import lombok.Setter;
 @NoArgsConstructor
 public class User {
 
+    @JsonView({UserView.FullUser.class, UserView.CreationUser.class})
     @Id
     @GeneratedValue
     @Column(name = "id")
     private UUID id;
 
+    @JsonView({UserView.ShortUser.class, PollView.FullPoll.class, OptionView.FullOption.class})
     @Column(name = "username")
     private String username;
 
     @Column(name = "password")
     private String password;
 
+    @JsonView({UserView.ShortUser.class})
     @Column(name = "role")
     private UserRole role;
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<Poll> pollings = new HashSet<>();
 
+    @JsonView({UserView.FullUser.class})
     @ManyToMany
     @JoinTable(name = "user_votes",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
