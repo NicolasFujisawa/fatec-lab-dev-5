@@ -71,6 +71,6 @@ public class OptionController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(this.optionService.update(option));
+                .body(this.optionService.save(option));
     }
 }
