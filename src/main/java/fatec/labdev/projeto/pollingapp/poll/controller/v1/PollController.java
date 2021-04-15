@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import javax.management.relation.RelationSupportMBean;
+
 @RestController
 @RequestMapping("v1/polls")
 public class PollController {
@@ -48,10 +50,17 @@ public class PollController {
                 .body(this.pollService.save(poll));
     }
 
-    @JsonView(PollView.ShortPoll.class)
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<Void> deletePoll(@PathVariable("id") UUID id) {
         this.pollService.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+    
+    @JsonView(PollView.CreationPoll.class)
+    @PutMapping("/{id}/update")
+    public ResponseEntity<Void> updatePoll(@PathVariable("id") UUID id,
+            @RequestBody Poll poll) {
+        this.pollService.save(poll);
         return ResponseEntity.noContent().build();
     }
 }
