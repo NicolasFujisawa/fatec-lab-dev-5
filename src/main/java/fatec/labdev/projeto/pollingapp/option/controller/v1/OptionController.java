@@ -40,7 +40,7 @@ public class OptionController {
     }
 
     @JsonView({OptionView.CreationOption.class})
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Option> createPoll(@RequestBody OptionRequest optionRequest) {
         Option option = OptionConverter.convertFrom(optionRequest);
         return ResponseEntity

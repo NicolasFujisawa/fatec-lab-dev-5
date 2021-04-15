@@ -31,7 +31,7 @@ public class UserController {
                 .body(this.userService.findById(id));
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @JsonView(UserView.CreationUser.class)
     public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
@@ -49,14 +49,14 @@ public class UserController {
                 .body(this.userService.signInUser(user));
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") UUID id) {
         this.userService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
     @JsonView(UserView.FullUser.class)
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<User> update(
             @RequestBody UserRequest userRequest,
             @PathVariable("id") UUID id) {
