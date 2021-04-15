@@ -62,7 +62,7 @@ public class OptionController {
     }
 
     @JsonView({OptionView.FullOption.class})
-    @PutMapping("/{id}/update")
+    @PutMapping("/{id}")
     public ResponseEntity<Option> update(
             @RequestBody OptionRequest optionRequest,
             @PathVariable("id") UUID id) {
