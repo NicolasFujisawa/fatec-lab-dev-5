@@ -31,16 +31,7 @@ public class OptionController {
     }
 
     @JsonView({OptionView.CreationOption.class})
-    @PostMapping("/create")
-    public ResponseEntity<Option> createPoll(@RequestBody OptionRequest optionRequest) {
-        Option option = OptionConverter.convertFrom(optionRequest);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(this.optionService.save(option));
-    }
-
-    @JsonView({OptionView.CreationOption.class})
-    @PostMapping("/createMany")
+    @PostMapping("/create-many")
     public ResponseEntity<List<Option>> createPoll(@RequestBody OptionRequest[] optionRequests) {
         List<Option> options = OptionConverter.convertManyFrom(optionRequests);
         return ResponseEntity
@@ -48,9 +39,31 @@ public class OptionController {
                 .body(this.optionService.saveAll(options));
     }
 
-    @DeleteMapping("/{id}/delete")
+    @JsonView({OptionView.CreationOption.class})
+    @PostMapping("/")
+    public ResponseEntity<Option> createPoll(@RequestBody OptionRequest optionRequest) {
+        Option option = OptionConverter.convertFrom(optionRequest);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(this.optionService.save(option));
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePoll(@PathVariable("id") UUID id) {
         this.optionService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @JsonView({OptionView.FullOption.class})
+    @PutMapping("/{id}")
+    public ResponseEntity<Option> update(
+            @RequestBody OptionRequest optionRequest,
+            @PathVariable("id") UUID id) {
+        Option option = OptionConverter.convertFrom(optionRequest);
+        option.setId(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(this.optionService.save(option));
     }
 }
