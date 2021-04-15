@@ -63,4 +63,9 @@ public class OptionServiceImpl implements OptionService {
                         user.getId(),
                         option.getId()));
     }
+
+    @Override
+    public Option update(Option option) {
+        return save(option);
+    }
 }

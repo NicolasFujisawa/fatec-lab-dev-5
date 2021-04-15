@@ -19,4 +19,6 @@ public interface OptionService {
     void vote(Option option, User user);
 
     void removeVote(Option option, User user);
+
+    Option update(Option option);
 }
