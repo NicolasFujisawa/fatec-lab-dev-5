@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] unguardRoutes = new String[]{
-            "/v1/users/create",
+            "/v1/users/sign-up",
             "/v1/users/sign-in"
     };
 

@@ -31,7 +31,7 @@ public class UserController {
                 .body(this.userService.findById(id));
     }
 
-    @PostMapping
+    @PostMapping("/sign-up")
     @JsonView(UserView.CreationUser.class)
     public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
