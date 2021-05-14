@@ -1,25 +1,21 @@
 package fatec.labdev.projeto.pollingapp.config.jwt;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fatec.labdev.projeto.pollingapp.user.dto.UserDto;
-import fatec.labdev.projeto.pollingapp.user.enums.UserRole;
-import fatec.labdev.projeto.pollingapp.user.model.User;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Component
 @Slf4j
@@ -53,27 +49,10 @@ public class JwtUtil {
     }
 
     private String doGenerateToken(Map<String, Object> claims, UserDetails userDetails) {
-        ObjectMapper mapper = new ObjectMapper();
-        String jsonUser = "";
-
-        UserDto userDto = UserDto.builder()
-                .username(userDetails.getUsername())
-                .role(userDetails.getAuthorities().iterator().next().getAuthority())
-                .build();
-
-        try {
-            jsonUser = mapper.writeValueAsString(userDto);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
         Date now = new Date(System.currentTimeMillis());
         Date expirationTime = new Date(System.currentTimeMillis() + JWT_VALIDITY_HOURS * 60 * 60 * 1000);
-
         return Jwts.builder()
-                .claim("userDetails", jsonUser)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(now).setExpiration(expirationTime)
+                .setClaims(claims).setSubject(userDetails.getUsername()).setIssuedAt(now).setExpiration(expirationTime)
                 .signWith(SignatureAlgorithm.HS512, this.secret).compact();
     }
 
