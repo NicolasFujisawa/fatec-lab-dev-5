@@ -35,7 +35,7 @@ public class UserController {
     @JsonView(UserView.CreationUser.class)
     public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
-        user.setRole(UserRole.MEMBER);
+        user.setRole(UserRole.ROLE_MEMBER);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(this.userService.save(user));

@@ -18,6 +18,6 @@ public class UserRequest {
     public UserRequest(String username, String password) {
         this.setUsername(username);
         this.setPassword(password);
-        this.setRole(UserRole.MEMBER);
+        this.setRole(UserRole.ROLE_MEMBER);
     }
 }

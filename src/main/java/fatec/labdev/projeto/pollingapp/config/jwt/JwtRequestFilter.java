@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -39,7 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         String jwtToken = getToken(requestTokenHeader);
-        String username = this.getUsernameFromToken(jwtToken);
+        String username = getUsernameFromToken(jwtToken);
 
         if (username == null) {
             filterChain.doFilter(request, response);
@@ -63,6 +62,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (token == null) {
             return null;
         }
+
         try {
             return this.jwtUtil.getUsernameFromToken(token);
         } catch (Exception exception) {
@@ -76,17 +76,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             log.info("Context already authenticated");
         }
 
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
         if (this.jwtUtil.validateToken(jwtToken, userDetails)) {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                    new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities());
 
-            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             // After setting the Authentication in the context, we specify
             // that the current user is authenticated.
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            log.info(username + " has Authenticated");
+            log.info(userDetails.getUsername() + " has Authenticated ");
         } else {
             log.info("JWT Token is expired");
         }

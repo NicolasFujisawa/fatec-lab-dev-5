@@ -14,6 +14,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -52,18 +53,21 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.save(user);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @Override
     public User update(User user) {
         user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         return this.userRepository.save(user);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @Override
     public User findById(UUID id) {
         return this.userRepository.findById(id)
                                   .orElseThrow(EntityNotFoundException::new);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @Override
     public boolean existsByUsername(String username) {
         return this.userRepository.existsByUsername(username);
@@ -74,6 +78,7 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByUsername(username);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @Override
     public void deleteById(UUID id) {
         this.userRepository.deleteById(id);
