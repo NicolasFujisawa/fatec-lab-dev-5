@@ -1,19 +1,29 @@
 package fatec.labdev.projeto.pollingapp.option.controller.v1;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import fatec.labdev.projeto.pollingapp.option.controller.v1.converter.OptionConverter;
+import fatec.labdev.projeto.pollingapp.option.controller.v1.request.OptionChangeRequest;
 import fatec.labdev.projeto.pollingapp.option.controller.v1.request.OptionRequest;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.option.service.OptionService;
+import fatec.labdev.projeto.pollingapp.user.model.User;
+import fatec.labdev.projeto.pollingapp.user.service.UserService;
+
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 @RequestMapping("v1/options")
@@ -21,6 +31,9 @@ public class OptionController {
 
     @Autowired
     private OptionService optionService;
+
+    @Autowired
+    private UserService userService;
 
     @JsonView({OptionView.FullOption.class})
     @GetMapping("/{id}")
@@ -65,5 +78,40 @@ public class OptionController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(this.optionService.save(option));
+    }
+
+    @JsonView({OptionView.ShortOption.class})
+    @PostMapping("/{optionId}/add-vote/{userId}")
+    public ResponseEntity<Void> receiveVote(
+            @PathVariable("optionId") UUID optionId,
+            @PathVariable("userId") UUID userId) {
+        Option option = this.optionService.findById(optionId);
+        User user = this.userService.findById(userId);
+
+        this.optionService.vote(option, user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/change-vote")
+    public ResponseEntity<Void> changeVote(
+            @RequestBody OptionChangeRequest optionChangeRequest) {
+        Option lastOption = this.optionService.findById(optionChangeRequest.getLastOptionId());
+        Option newVoteOption = this.optionService.findById(optionChangeRequest.getNewOptionVoteId());
+        User user = this.userService.findById(optionChangeRequest.getUserId());
+
+        this.optionService.removeVote(lastOption, user);
+        this.optionService.vote(newVoteOption, user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{optionId}/remove-vote/{userId}")
+    public ResponseEntity<Void> deleteVote(
+            @PathVariable("optionId") UUID optionId,
+            @PathVariable("userId") UUID userId) {
+        Option option = this.optionService.findById(optionId);
+        User user = this.userService.findById(userId);
+
+        this.optionService.removeVote(option, user);
+        return ResponseEntity.noContent().build();
     }
 }
