@@ -1,6 +1,7 @@
 package fatec.labdev.projeto.pollingapp.option.controller.v1;
 
 import fatec.labdev.projeto.pollingapp.option.controller.v1.converter.OptionConverter;
+import fatec.labdev.projeto.pollingapp.option.controller.v1.request.OptionChangeRequest;
 import fatec.labdev.projeto.pollingapp.option.controller.v1.request.OptionRequest;
 import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.option.service.OptionService;
@@ -80,13 +81,37 @@ public class OptionController {
     }
 
     @JsonView({OptionView.ShortOption.class})
-    @PostMapping("/{optionId}/receive-vote/{userId}")
+    @PostMapping("/{optionId}/add-vote/{userId}")
     public ResponseEntity<Void> receiveVote(
             @PathVariable("optionId") UUID optionId,
             @PathVariable("userId") UUID userId) {
         Option option = this.optionService.findById(optionId);
         User user = this.userService.findById(userId);
+
         this.optionService.vote(option, user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/change-vote")
+    public ResponseEntity<Void> changeVote(
+            @RequestBody OptionChangeRequest optionChangeRequest) {
+        Option lastOption = this.optionService.findById(optionChangeRequest.getLastOptionId());
+        Option newVoteOption = this.optionService.findById(optionChangeRequest.getNewOptionVoteId());
+        User user = this.userService.findById(optionChangeRequest.getUserId());
+
+        this.optionService.removeVote(lastOption, user);
+        this.optionService.vote(newVoteOption, user);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{optionId}/remove-vote/{userId}")
+    public ResponseEntity<Void> deleteVote(
+            @PathVariable("optionId") UUID optionId,
+            @PathVariable("userId") UUID userId) {
+        Option option = this.optionService.findById(optionId);
+        User user = this.userService.findById(userId);
+
+        this.optionService.removeVote(option, user);
         return ResponseEntity.noContent().build();
     }
 }
