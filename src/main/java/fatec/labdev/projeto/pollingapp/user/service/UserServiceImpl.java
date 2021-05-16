@@ -1,6 +1,6 @@
 package fatec.labdev.projeto.pollingapp.user.service;
 
-import javax.persistence.EntityExistsException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import fatec.labdev.projeto.pollingapp.common.exceptions.EntityNotFoundException;
 import fatec.labdev.projeto.pollingapp.config.jwt.JwtUtil;
@@ -10,21 +10,19 @@ import fatec.labdev.projeto.pollingapp.user.model.User;
 import fatec.labdev.projeto.pollingapp.user.model.UserDetailsImpl;
 import fatec.labdev.projeto.pollingapp.user.repository.UserRepository;
 
-import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.persistence.EntityExistsException;
+
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -64,7 +62,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(UUID id) {
         return this.userRepository.findById(id)
-                                  .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -85,7 +83,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse signInUser(User loginRequest) {
+    public UserResponse signInUser(User loginRequest) throws JsonProcessingException {
         authenticate(loginRequest.getUsername(), loginRequest.getPassword());
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getUsername());

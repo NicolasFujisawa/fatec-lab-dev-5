@@ -1,7 +1,5 @@
 package fatec.labdev.projeto.pollingapp.config.global;
 
-import fatec.labdev.projeto.pollingapp.config.jwt.JwtAuthenticationEntryPoint;
-
 import fatec.labdev.projeto.pollingapp.config.jwt.JwtRequestFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
