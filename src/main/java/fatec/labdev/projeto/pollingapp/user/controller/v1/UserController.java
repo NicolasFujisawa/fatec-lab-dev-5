@@ -2,6 +2,8 @@ package fatec.labdev.projeto.pollingapp.user.controller.v1;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import fatec.labdev.projeto.pollingapp.user.controller.v1.converter.UserConverter;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.request.UserRequest;
 import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
@@ -35,14 +37,14 @@ public class UserController {
     @JsonView(UserView.CreationUser.class)
     public ResponseEntity<User> createUser(@RequestBody UserRequest userRequest) {
         User user = UserConverter.convertFrom(userRequest);
-        user.setRole(UserRole.MEMBER);
+        user.setRole(UserRole.ROLE_MEMBER);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(this.userService.save(user));
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<UserResponse> signIn(@RequestBody UserRequest loginRequest) {
+    public ResponseEntity<UserResponse> signIn(@RequestBody UserRequest loginRequest) throws JsonProcessingException {
         User user = UserConverter.convertFrom(loginRequest);
         return ResponseEntity
                 .status(HttpStatus.FOUND)

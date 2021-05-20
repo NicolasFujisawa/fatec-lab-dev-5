@@ -1,19 +1,26 @@
 package fatec.labdev.projeto.pollingapp.config.jwt;
 
+import fatec.labdev.projeto.pollingapp.user.UserLoginDto;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import io.jsonwebtoken.Claims;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class JwtUtil {
 
     private static final long JWT_VALIDITY_HOURS = 4L;
@@ -21,43 +28,48 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    public Claims getAllClaimsFromToken(String token) {
-        return Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
-    }
-
-    public <T> T getClaimsFromToken(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = this.getAllClaimsFromToken(token);
-        return claimsResolver.apply(claims);
-    }
-
-    public String getUsernameFromToken(String token) {
-        return this.getClaimsFromToken(token, Claims::getSubject);
-    }
-
-    public Date getExpirationDateFromToken(String token) {
-        return this.getClaimsFromToken(token, Claims::getExpiration);
-    }
-
-    public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        return this.doGenerateToken(claims, userDetails.getUsername());
-    }
-
-    private String doGenerateToken(Map<String, Object> claims, String username) {
+    public String generateToken(UserDetails userDetails) throws JsonProcessingException {
         Date now = new Date(System.currentTimeMillis());
         Date expirationTime = new Date(System.currentTimeMillis() + JWT_VALIDITY_HOURS * 60 * 60 * 1000);
+
+        ObjectMapper mapper = new ObjectMapper();
+        UserLoginDto userLoginDto = UserLoginDto
+                .builder()
+                .username(userDetails.getUsername())
+                .role(userDetails.getAuthorities().iterator().next().getAuthority())
+                .build();
+
+        String token = mapper.writeValueAsString(userLoginDto);
+
         return Jwts.builder()
-                .setClaims(claims).setSubject(username).setIssuedAt(now).setExpiration(expirationTime)
-                .signWith(SignatureAlgorithm.HS512, this.secret).compact();
+                .claim("user", token)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(now)
+                .setExpiration(expirationTime)
+                .signWith(SignatureAlgorithm.HS512, this.secret)
+                .compact();
     }
 
-    public boolean isTokenExpired(String token) {
-        final Date expiration = this.getExpirationDateFromToken(token);
-        return expiration.before(new Date());
-    }
+    public Authentication parseToken(String token) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        String credentialsJson = Jwts
+                .parser()
+                .setSigningKey(secret)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("user", String.class);
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = this.getUsernameFromToken(token);
-        return username.equals(userDetails.getUsername()) && !this.isTokenExpired(token);
+        UserLoginDto userLogin = mapper.readValue(credentialsJson, UserLoginDto.class);
+        UserDetails userDetails = User
+                .builder()
+                .username(userLogin.getUsername())
+                .password("secret")
+                .authorities(userLogin.getRole())
+                .build();
+
+        return new UsernamePasswordAuthenticationToken(
+                userDetails.getUsername(),
+                userDetails.getPassword(),
+                userDetails.getAuthorities());
     }
 }

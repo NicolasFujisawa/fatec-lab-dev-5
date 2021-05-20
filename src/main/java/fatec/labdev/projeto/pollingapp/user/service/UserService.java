@@ -1,5 +1,7 @@
 package fatec.labdev.projeto.pollingapp.user.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import fatec.labdev.projeto.pollingapp.user.controller.v1.response.UserResponse;
 import fatec.labdev.projeto.pollingapp.user.model.User;
 
@@ -19,5 +21,5 @@ public interface UserService {
 
     void deleteById(UUID id);
 
-    UserResponse signInUser(User userRequest);
+    UserResponse signInUser(User userRequest) throws JsonProcessingException;
 }

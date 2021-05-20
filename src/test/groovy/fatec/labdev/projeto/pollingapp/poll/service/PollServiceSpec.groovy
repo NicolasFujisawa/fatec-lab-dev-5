@@ -34,7 +34,7 @@ class PollServiceSpec extends Specification {
                 .builder()
                 .username("kik12")
                 .password("mysecret")
-                .role(UserRole.ADMIN)
+                .role(UserRole.ROLE_ADMIN)
                 .build()
         userService.save(user)
 
@@ -77,14 +77,14 @@ class PollServiceSpec extends Specification {
                 .builder()
                 .username("kek13")
                 .password("123")
-                .role(UserRole.ADMIN)
+                .role(UserRole.ROLE_ADMIN)
                 .build()
 
         User user2 = User
                 .builder()
                 .username("rog11")
                 .password("132")
-                .role(UserRole.ADMIN)
+                .role(UserRole.ROLE_ADMIN)
                 .build()
 
         userService.save(user1)
@@ -143,7 +143,7 @@ class PollServiceSpec extends Specification {
                 .builder()
                 .username("kek13")
                 .password("123")
-                .role(UserRole.ADMIN)
+                .role(UserRole.ROLE_ADMIN)
                 .build()
         userService.save(user)
 

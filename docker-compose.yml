@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   pollingapp-api:
@@ -8,8 +8,8 @@ services:
     image: pollingapp-api
     container_name: pollingapp
     ports:
-      - '5005:5005'
-      - '8080:8080'
+      - "5005:5005"
+      - "8080:8080"
     env_file:
       - .env
     depends_on:
@@ -23,7 +23,7 @@ services:
       POSTGRES_USER: $DS_USERNAME
       POSTGRES_PASSWORD: $DS_PASSWORD
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - ./tmp/postgres:/var/lib/postgresql/data
 
@@ -40,7 +40,7 @@ services:
       - gradle_volume:/home/gradle/.gradle
     user: gradle
     working_dir: /app
-    command: sh -c "gradle build -xtest --continuous & gradle bootRun"
+    command: sh -c "gradle build -xtest --continuous"
     depends_on:
       - db
 

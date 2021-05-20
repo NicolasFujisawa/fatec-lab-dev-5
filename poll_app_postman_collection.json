@@ -1,0 +1,410 @@
+{
+	"info": {
+		"_postman_id": "68b3dbbd-da33-44b8-a668-45b387b817bd",
+		"name": "Poll App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/users/a20085f5-aca0-4d83-876b-7a9798a38a7a/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"a20085f5-aca0-4d83-876b-7a9798a38a7a",
+								"delete"
+							]
+						},
+						"description": "Delete User"
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/v1/users/40f35867-ee25-42fe-b984-8faeedbfd1a7",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"40f35867-ee25-42fe-b984-8faeedbfd1a7"
+							]
+						},
+						"description": "Get User"
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"davin\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/users/create",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"create"
+							]
+						},
+						"description": "Create user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"davin\",\n    \"password\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/users/sign-in",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"sign-in"
+							]
+						},
+						"description": "Sign in"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"jason\",\n    \"password\": \"1234\",\n    \"role\": \"MEMBER\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/v1/users/a20085f5-aca0-4d83-876b-7a9798a38a7a/update",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"users",
+								"a20085f5-aca0-4d83-876b-7a9798a38a7a",
+								"update"
+							]
+						},
+						"description": "Update User"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Poll",
+			"item": [
+				{
+					"name": "Most voted",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"A title\",\n    \"description\": \"A description\",\n    \"owner\": {\n        \"id\": \"40f35867-ee25-42fe-b984-8faeedbfd1a7\"\n    },\n    \"enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/polls/a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e/most-voted",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"polls",
+								"a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e",
+								"most-voted"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"A title\",\n    \"description\": \"A description\",\n    \"owner\": {\n        \"id\": \"40f35867-ee25-42fe-b984-8faeedbfd1a7\"\n    },\n    \"enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/polls/a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"polls",
+								"a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"A title\",\n    \"description\": \"A description\",\n    \"owner\": {\n        \"id\": \"40f35867-ee25-42fe-b984-8faeedbfd1a7\"\n    },\n    \"enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/polls/31ce59ae-0e3b-488a-8924-3946a61896d1/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"polls",
+								"31ce59ae-0e3b-488a-8924-3946a61896d1",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"A title\",\n    \"description\": \"A description\",\n    \"owner\": {\n        \"id\": \"40f35867-ee25-42fe-b984-8faeedbfd1a7\"\n    },\n    \"enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/polls/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"polls",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Option",
+			"item": [
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"A title\",\n    \"description\": \"A description\",\n    \"owner\": {\n        \"id\": \"40f35867-ee25-42fe-b984-8faeedbfd1a7\"\n    },\n    \"enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/options/c72b5b20-75e6-4d58-bb25-31f5baa63028/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"options",
+								"c72b5b20-75e6-4d58-bb25-31f5baa63028",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"A title\",\n    \"description\": \"A description\",\n    \"owner\": {\n        \"id\": \"40f35867-ee25-42fe-b984-8faeedbfd1a7\"\n    },\n    \"enabled\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/options/c72b5b20-75e6-4d58-bb25-31f5baa63028",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"options",
+								"c72b5b20-75e6-4d58-bb25-31f5baa63028"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Many",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"title\": \"Option A\",\n    \"poll\": {\n      \"id\": \"a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e\"\n    }\n  },\n  {\n    \"title\": \"Option B\",\n    \"poll\": {\n      \"id\": \"a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e\"\n    }\n  }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/options/createMany",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"options",
+								"createMany"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Option A\",\n    \"poll\": {\n        \"id\": \"a1dcc778-7b27-42a4-a2cb-3f6ce5e8ca0e\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/options/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"options",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

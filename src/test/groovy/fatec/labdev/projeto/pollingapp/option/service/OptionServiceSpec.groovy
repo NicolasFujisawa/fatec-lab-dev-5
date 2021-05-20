@@ -35,7 +35,7 @@ class OptionServiceSpec extends Specification {
                 .builder()
                 .username("kik12")
                 .password("mysecret")
-                .role(UserRole.ADMIN)
+                .role(UserRole.ROLE_ADMIN)
                 .build()
         userService.save(user)
 
@@ -69,7 +69,7 @@ class OptionServiceSpec extends Specification {
                 .builder()
                 .username("kik12")
                 .password("mysecret")
-                .role(UserRole.ADMIN)
+                .role(UserRole.ROLE_ADMIN)
                 .build()
         userService.save(user)
 

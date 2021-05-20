@@ -25,7 +25,7 @@ class UserServiceSpec extends Specification {
         User user = new User()
         user.setUsername("polo")
         user.setPassword("mysecret")
-        user.setRole(UserRole.MEMBER)
+        user.setRole(UserRole.ROLE_MEMBER)
 
         when:
         def userPersisted = userService.save(user)
@@ -33,7 +33,7 @@ class UserServiceSpec extends Specification {
 
         then:
         user.id != null
-        user.role == UserRole.MEMBER
+        user.role == UserRole.ROLE_MEMBER
         userPersisted == user
     }
 
