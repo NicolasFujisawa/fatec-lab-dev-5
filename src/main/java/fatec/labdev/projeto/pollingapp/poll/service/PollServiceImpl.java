@@ -5,14 +5,14 @@ import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.poll.model.Poll;
 import fatec.labdev.projeto.pollingapp.poll.repository.PollRepository;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
@@ -56,5 +56,10 @@ public class PollServiceImpl implements PollService {
     @Override
     public List<Poll> findEnabledByOwner(UUID ownerId) {
         return findByOwnerAndIsEnabled(ownerId, true);
+    }
+
+    @Override
+    public List<Poll> findAll() {
+        return this.pollRepository.findAll();
     }
 }

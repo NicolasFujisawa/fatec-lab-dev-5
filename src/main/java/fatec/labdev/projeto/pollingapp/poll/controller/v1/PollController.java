@@ -1,20 +1,27 @@
 package fatec.labdev.projeto.pollingapp.poll.controller.v1;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import fatec.labdev.projeto.pollingapp.option.model.Option;
 import fatec.labdev.projeto.pollingapp.poll.controller.v1.converter.PollConverter;
 import fatec.labdev.projeto.pollingapp.poll.controller.v1.request.PollRequest;
 import fatec.labdev.projeto.pollingapp.poll.model.Poll;
 import fatec.labdev.projeto.pollingapp.poll.service.PollService;
 
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
 @RequestMapping("v1/polls")
@@ -60,5 +67,12 @@ public class PollController {
             @RequestBody Poll poll) {
         this.pollService.save(poll);
         return ResponseEntity.noContent().build();
+    }
+
+    @JsonView(PollView.FullPoll.class)
+    @GetMapping
+    public ResponseEntity<List<Poll>> getAllPolls() {
+        List<Poll> polls = this.pollService.findAll();
+        return ResponseEntity.ok(polls);
     }
 }

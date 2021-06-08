@@ -19,4 +19,6 @@ public interface PollService {
     List<Poll> findByOwnerAndIsEnabled(UUID ownerId, Boolean isEnabled);
 
     List<Poll> findEnabledByOwner(UUID ownerId);
+
+    List<Poll> findAll();
 }
