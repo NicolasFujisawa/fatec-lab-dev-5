@@ -44,13 +44,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         try {
             doAuthentication(jwtToken);
             filterChain.doFilter(request, response);
-        } catch (Throwable t) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), t.getMessage());
+        } catch (Exception e) {
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         }
     }
 
     private static String getToken(String authHeader) {
-        return authHeader.replaceAll("Bearer ", "");
+        return authHeader.replace("Bearer ", "");
     }
 
     private void doAuthentication(String jwtToken) throws JsonProcessingException {
