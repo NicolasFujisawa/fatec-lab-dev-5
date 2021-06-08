@@ -47,7 +47,7 @@ public class UserController {
     public ResponseEntity<UserResponse> signIn(@RequestBody UserRequest loginRequest) throws JsonProcessingException {
         User user = UserConverter.convertFrom(loginRequest);
         return ResponseEntity
-                .status(HttpStatus.FOUND)
+                .status(HttpStatus.OK)
                 .body(this.userService.signInUser(user));
     }
 
